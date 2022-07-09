@@ -1,0 +1,27 @@
+version: '3.9'
+
+services:
+
+  postgres-db:
+    image: vulnerable:staging
+    container_name: vulnerable_database
+    volumes:
+      - ${PWD}/db/:/var/lib/postgresql/data   
+    env_file:
+      - .env           
+    ports:
+      - 5432:5432
+    restart: always
+
+  php:
+    image: php:staging
+    container_name: vulnerable_front
+    ports:
+      - 80:80
+    environment:
+      - DATABASE_CON=10.37.129.2 # Change for host docker ip 
+    env_file:
+      - .env 
+    volumes:
+      - ${PWD}/php/www:/var/www/html/
+      
